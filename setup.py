@@ -63,11 +63,12 @@ if os.name == 'posix':
     extra_link_args.extend([
         os.path.join(LIBEVENT_ROOT, '.libs', 'libevent.a'),
         os.path.join(LIBEVENT_ROOT, '.libs', 'libevent_pthreads.a'),
-	'-lrt',
 	'-lpthread',
     ])
-    libraries.append('rt')
     libraries.append('pthread')
+    if sys.platform != 'darwin':
+        extra_link_args.append('-lrt')
+        libraries.append('rt')
 elif os.name == 'nt':
     # enable thread support
     extra_link_args.extend([
